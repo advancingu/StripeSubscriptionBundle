@@ -4,17 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="advancingu_stripe_subscription.example.class">Advancingu\StripeSubscriptionBundle\Example</parameter>
+        <parameter key="advancingu_stripe_subscription.subscription.class">Advancingu\StripeSubscriptionBundle\Component\SubscriptionComponent</parameter>
     </parameters>
 
     <services>
-        <service id="advancingu_stripe_subscription.example" class="%advancingu_stripe_subscription.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="advancingu_stripe_subscription.subscription" class="%advancingu_stripe_subscription.subscription.class%">
+            <argument type="service" id="logger"></argument>
+            <argument>%stripe_secret_key%</argument>
         </service>
     </services>
-    -->
 </container>
