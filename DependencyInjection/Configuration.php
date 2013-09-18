@@ -31,7 +31,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('stripe_api_key')
+            ->scalarNode('stripe_secret_key')
                 ->isRequired()
                 ->defaultNull()
             ->end()
