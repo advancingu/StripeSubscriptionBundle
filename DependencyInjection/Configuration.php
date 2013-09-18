@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('stripe_api_key')
                 ->isRequired()
-                ->default(null)
+                ->defaultNull()
             ->end()
         ;
 
