@@ -19,5 +19,6 @@
     },
     "autoload": {
         "psr-0": { "Advancingu\\StripeSubscriptionBundle": "" }
-    }
+    },
+    "target-dir": "Advancingu/StripeSubscriptionBundle"
 }
