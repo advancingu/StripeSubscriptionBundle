@@ -14,18 +14,6 @@ namespace Advancingu\StripeSubscriptionBundle\Model;
 interface SubscriberInterface
 {
     /**
-     * Default internal plan ID for the free plan that 
-     * requires no actual subscription. */
-    const PLAN_FREE = 1;
-    
-    /**
-     * @return array(int:string) Array of internal plan IDs and 
-     * their corresponding plan name registered with Stripe at 
-     * https://manage.stripe.com/plans .
-     */
-    public function getPlanIdentifiers();
-    
-    /**
      * @return string Stripe customer object ID created with 
      * SubscriptionComponent::createStripeCustomer()
      */

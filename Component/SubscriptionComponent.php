@@ -27,24 +27,36 @@ class SubscriptionComponent
     /** @var $stripeApiKey string */
     private $stripeApiKey;
     
-    public function __construct(\Symfony\Bridge\Monolog\Logger $logger, $stripeApiKey)
+    /** 
+     * @var array(string) Plan names registered with Stripe.
+     * @see https://manage.stripe.com/plans
+     */
+    private $plans;
+    
+    public function __construct(\Symfony\Bridge\Monolog\Logger $logger, $stripeApiKey, array $plans)
     {
         $this->logger = $logger;
         $this->stripeApiKey = $stripeApiKey;
+        $this->plans = $plans;
     }
     
     /**
-     * Subscribes $subscriber to plan $planId.
+     * Subscribes $subscriber to plan $plan.
      * 
      * @param \Advancingu\StripeSubscriptionBundle\Model\SubscriberInterface $subscriber
-     * @param int $planId
+     * @param string $plan
      * @throws \InvalidArgumentException|\Advancingu\StripeSubscriptionBundle\Exception\SubscriptionFailedException
      */
-    public function subscribe(\Advancingu\StripeSubscriptionBundle\Model\SubscriberInterface $subscriber, $planId)
+    public function subscribe(\Advancingu\StripeSubscriptionBundle\Model\SubscriberInterface $subscriber, $plan)
     {
-        if (!in_array($planId, array_keys($subscriber->getPlanIdentifiers())))
+        if ($plan === null)
         {
-            throw new \InvalidArgumentException('"$planId" must be a plan constant integer.');
+            return $this->unsubscribe($subscriber);
+        }
+        
+        if (!in_array($plan, $this->plans))
+        {
+            throw new \InvalidArgumentException('"$plan" must be a valid plan name.');
         }
         
         if ($subscriber->getStripeCustomerId() === null)
@@ -52,24 +64,19 @@ class SubscriptionComponent
             throw new \Exception(sprintf('No Stripe customer ID associated with subscriber "%s".', $subscriber->getId()));
         }
         
-        if ($planId === SubscriberInterface::PLAN_FREE)
-        {
-            return $this->unsubscribe($subscriber);
-        }
-        
-        $planStripeIdents = $subscriber->getPlanIdentifiers();
-        $planName = $planStripeIdents[$planId];
-
         \Stripe::setApiKey($this->stripeApiKey);
         $customer = \Stripe_Customer::retrieve($subscriber->getStripeCustomerId());
         
-        $this->logger->debug(sprintf('About to subscribe subscriber "%s" to plan named "%s".', $subscriber->getId(), $planName));
-        $result = $customer->updateSubscription(array("plan" => $planName));
-        $this->logger->debug(sprintf("Subscription result for subscriber \"%s\":\n%s", $subscriber->getId(), $result->__toString()));
+        $this->logger->debug(sprintf('About to subscribe subscriber "%s" to plan "%s".', 
+            $subscriber->getId(), $plan));
+        $result = $customer->updateSubscription(array("plan" => $plan));
+        $this->logger->debug(sprintf("Subscription result for subscriber \"%s\":\n%s", 
+            $subscriber->getId(), $result->__toString()));
         
         if ($result->__get('object') !== 'subscription')
         {
-            throw new SubscriptionFailedException(sprintf('Subscribing to plan with ID "%d" for subscriber "%s" failed.', $planId, $subscriber->getId()));
+            throw new SubscriptionFailedException(sprintf('Subscribing to plan "%s" for subscriber "%s" failed.', 
+                $plan, $subscriber->getId()));
         }
     }
     

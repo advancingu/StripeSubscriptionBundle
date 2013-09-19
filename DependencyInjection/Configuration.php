@@ -31,9 +31,13 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('stripe_secret_key')
-                ->isRequired()
-                ->defaultNull()
+                ->scalarNode('stripe_secret_key')
+                    ->isRequired()
+                    ->defaultNull()
+                ->end()
+                ->arrayNode('plans')
+                    ->prototype('scalar')
+                ->end()
             ->end()
         ;
 

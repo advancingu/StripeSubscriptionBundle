@@ -12,6 +12,7 @@
         <service id="advancingu_stripe_subscription.subscription" class="%advancingu_stripe_subscription.subscription.class%">
             <argument type="service" id="logger"></argument>
             <argument>%stripe_secret_key%</argument>
+            <argument type="collection">%plans%</argument>
         </service>
     </services>
 </container>
