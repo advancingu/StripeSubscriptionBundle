@@ -21,7 +21,7 @@ use Advancingu\StripeSubscriptionBundle\Exception\SubscriptionFailedException;
  */
 class SubscriptionComponent
 {
-    /** @var $logger \Symfony\Bridge\Monolog\Logger */
+    /** @var $logger \Symfony\Component\HttpKernel\Log\LoggerInterface */
     private $logger;
     
     /** @var $stripeApiKey string */
@@ -33,7 +33,7 @@ class SubscriptionComponent
      */
     private $plans;
     
-    public function __construct(\Symfony\Bridge\Monolog\Logger $logger, $stripeApiKey, array $plans)
+    public function __construct(\Symfony\Component\HttpKernel\Log\LoggerInterface $logger, $stripeApiKey, array $plans)
     {
         $this->logger = $logger;
         $this->stripeApiKey = $stripeApiKey;
