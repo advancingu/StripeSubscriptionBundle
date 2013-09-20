@@ -1,0 +1,34 @@
+<form action="{{ actionUrl }}" method="post" {{ form_enctype(planForm) }}>
+  {% if planForm.vars.errors|length %}
+    <div class="alert alert-danger">
+    {{ form_errors(planForm) }}
+    </div>
+  {% endif %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Plan</th>
+      <th>Price / month</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for planId, plan in plans %}
+    <tr>
+      <td>{{ plan.i18nKey | trans({}) }}</td>
+      <td>{{ plan.price / 100 }}</td>
+      <td>
+        {% if subscriber.currentPlan != planId %}
+        <button class="btn btn-default plan-button" data-plan-price="{{ plan.price }}" type="button">Activate</button>
+        {% else %}
+        Your current plan
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{{ form_row(planForm.selectedPlan) }}
+{{ form_row(planForm.stripeToken) }}
+{{ form_row(planForm._token) }}
+</form>
