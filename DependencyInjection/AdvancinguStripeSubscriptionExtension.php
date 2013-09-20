@@ -36,6 +36,14 @@ class AdvancinguStripeSubscriptionExtension extends Extension
         
         // expose configuration parameters to global container
         $container->setParameter(
+            'advancingu_stripe_subscription.keys.public',
+            $config['stripe_public_key']
+        );
+        $container->setParameter(
+            'advancingu_stripe_subscription.keys.secret',
+            $config['stripe_secret_key']
+        );
+        $container->setParameter(
             'advancingu_stripe_subscription.plans',
             $config['plans']
         );

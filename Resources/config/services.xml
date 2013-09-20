@@ -6,13 +6,12 @@
 
     <parameters>
         <parameter key="advancingu_stripe_subscription.subscription.class">Advancingu\StripeSubscriptionBundle\Component\SubscriptionComponent</parameter>
-        <parameter key="advancingu_stripe_subscription.plans" />
     </parameters>
 
     <services>
         <service id="advancingu_stripe_subscription.subscription" class="%advancingu_stripe_subscription.subscription.class%">
             <argument type="service" id="logger"></argument>
-            <argument>%stripe_secret_key%</argument>
+            <argument>%advancingu_stripe_subscription.keys.secret%</argument>
             <argument>%advancingu_stripe_subscription.plans%</argument>
         </service>
     </services>
