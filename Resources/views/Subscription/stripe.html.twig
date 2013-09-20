@@ -1,0 +1,41 @@
+<script type="text/javascript" src="https://checkout.stripe.com/v2/checkout.js"></script>
+<script type="text/javascript">
+// {# Sets the hidden 'selectedPlan' field to the value of the clicked button, then submits the form. #}
+//
+$('.plan-subscribe-button').click(function() {
+
+  $('#{{ planForm.selectedPlan.vars.id }}').val($(this).attr('data-plan-id'));
+  var hasPaymentData = {{ subscriber.stripeCustomerId is empty ? 'false' : 'true'}};
+
+  // {# get Stripe token if necessary #}
+  //
+  if (!hasPaymentData) {
+    
+    var tokenHandler = function(res) {
+      $('#{{ planForm.stripeToken.vars.id }}').val(res.id);
+      $('#{{ planForm.stripeToken.vars.id }}').closest('form').submit();
+    };
+    
+    StripeCheckout.open({
+      key:         '{{ stripePublicKey }}',
+      address:     false,
+      amount:      $(this).attr('data-plan-price'),
+      currency:    $(this).attr('data-plan-currency'),
+      name:        '{{ payeeName }}',
+      description: $(this).attr('data-plan-name'),
+      panelLabel:  'Subscribe',
+      token:       tokenHandler
+    });
+
+  } else {
+      $('#{{ planForm.selectedPlan.vars.id }}').closest('form').submit();
+  }
+  return false;
+});
+
+$('.plan-cancel-button').click(function() {
+  $('#{{ planForm.selectedPlan.vars.id }}').val('');
+  $('#{{ planForm.selectedPlan.vars.id }}').closest('form').submit();
+  return false;
+});
+</script>
