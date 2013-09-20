@@ -4,6 +4,7 @@
 //
 $('.plan-subscribe-button').click(function() {
 
+  $(this).attr("disabled", "disabled");
   $('#{{ planForm.selectedPlan.vars.id }}').val($(this).attr('data-plan-id'));
   var hasPaymentData = {{ subscriber.stripeCustomerId is empty ? 'false' : 'true'}};
 
@@ -34,6 +35,7 @@ $('.plan-subscribe-button').click(function() {
 });
 
 $('.plan-cancel-button').click(function() {
+  $(this).attr("disabled", "disabled");
   $('#{{ planForm.selectedPlan.vars.id }}').val('');
   $('#{{ planForm.selectedPlan.vars.id }}').closest('form').submit();
   return false;
