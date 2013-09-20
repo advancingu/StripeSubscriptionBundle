@@ -54,7 +54,7 @@ class SubscriptionComponent
             return $this->unsubscribe($subscriber);
         }
         
-        if (!in_array($plan, $this->plans))
+        if (!in_array($plan, array_keys($this->plans)))
         {
             throw new \InvalidArgumentException('"$plan" must be a valid plan name.');
         }
