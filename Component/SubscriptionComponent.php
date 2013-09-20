@@ -28,7 +28,7 @@ class SubscriptionComponent
     private $stripeApiKey;
     
     /** 
-     * @var array(string) Plan names registered with Stripe.
+     * @var array(string:array(string:mixed)) Plan names registered with Stripe.
      * @see https://manage.stripe.com/plans
      */
     private $plans;
