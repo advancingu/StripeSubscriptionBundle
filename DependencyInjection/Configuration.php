@@ -46,6 +46,10 @@ class Configuration implements ConfigurationInterface
                                 ->isRequired()
                                 ->cannotBeEmpty()
                             ->end()
+                            ->scalarNode('messageDomain')
+                                ->defaultValue('messages')
+                                ->cannotBeEmpty()
+                            ->end()
                             ->integerNode('price')
                                 ->isRequired()
                                 ->cannotBeEmpty()
@@ -60,7 +64,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
-                ;
+            ;
         
         return $treeBuilder;
     }

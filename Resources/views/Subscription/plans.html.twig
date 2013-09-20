@@ -15,7 +15,7 @@
   <tbody>
     {% for planId, plan in plans %}
     <tr>
-      <td>{{ plan.i18nKey | trans({}) }}</td>
+      <td>{{ plan.i18nKey | trans({}, plan.messageDomain) }}</td>
       <td>{{ plan.currency }} {{ plan.price / 100 }}</td>
       <td>
         {% if subscriber.currentPlan == null %}
@@ -23,7 +23,7 @@
           data-plan-price="{{ plan.price }}" 
           data-plan-currency="{{ plan.currency }}" 
           data-plan-id="{{ planId }}" 
-          data-plan-name="{{ plan.i18nKey | trans({}) | e }}" 
+          data-plan-name="{{ plan.i18nKey | trans({}, plan.messageDomain) | e }}" 
           type="button">Subscribe</button>
         {% elseif subscriber.currentPlan == planId%}
         <button class="btn btn-default plan-cancel-button" 
