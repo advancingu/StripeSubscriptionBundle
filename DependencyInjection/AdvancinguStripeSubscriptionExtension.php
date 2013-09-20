@@ -39,5 +39,9 @@ class AdvancinguStripeSubscriptionExtension extends Extension
             'advancingu_stripe_subscription.plans',
             $config['plans']
         );
+        $container->setParameter(
+            'advancingu_stripe_subscription.payee_name',
+            $config['payee_name']
+        );
     }
 }
