@@ -23,7 +23,6 @@ class PlanType extends AbstractType
         ->add('selectedPlan', 'hidden', array(
             'mapped' => false,
             'constraints' => array(
-                new NotNull(),
             )
         ))
         ->add('stripeToken', 'hidden', array(
