@@ -16,12 +16,20 @@
     {% for planId, plan in plans %}
     <tr>
       <td>{{ plan.i18nKey | trans({}) }}</td>
-      <td>{{ plan.price / 100 }}</td>
+      <td>{{ plan.currency }} {{ plan.price / 100 }}</td>
       <td>
-        {% if subscriber.currentPlan != planId %}
-        <button class="btn btn-default plan-button" data-plan-price="{{ plan.price }}" type="button">Activate</button>
+        {% if subscriber.currentPlan == null %}
+        <button class="btn btn-default plan-subscribe-button" 
+          data-plan-price="{{ plan.price }}" 
+          data-plan-currency="{{ plan.currency }}" 
+          data-plan-id="{{ planId }}" 
+          data-plan-name="{{ plan.i18nKey | trans({}) | e }}" 
+          type="button">Subscribe</button>
+        {% elseif subscriber.currentPlan == planId%}
+        <button class="btn btn-default plan-cancel-button" 
+          data-plan-id="{{ planId }}" 
+          type="button">Cancel</button>
         {% else %}
-        Your current plan
         {% endif %}
       </td>
     </tr>
