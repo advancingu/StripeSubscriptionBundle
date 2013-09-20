@@ -36,11 +36,29 @@ class Configuration implements ConfigurationInterface
                     ->defaultNull()
                 ->end()
                 ->arrayNode('plans')
-                    ->prototype('scalar')
+                    ->useAttributeAsKey('name')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('i18nKey')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                            ->end()
+                            ->integerNode('price')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                                ->min(0)
+                                ->max(100000)
+                            ->end()
+                            ->scalarNode('currency')
+                                ->defaultValue('USD')
+                                ->cannotBeEmpty()
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
-        ;
-
+                ;
+        
         return $treeBuilder;
     }
 }

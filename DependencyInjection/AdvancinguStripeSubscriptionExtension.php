@@ -33,5 +33,11 @@ class AdvancinguStripeSubscriptionExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+        
+        // expose configuration parameters to global container
+        $container->setParameter(
+            'advancingu_stripe_subscription.plans',
+            $config['plans']
+        );
     }
 }
