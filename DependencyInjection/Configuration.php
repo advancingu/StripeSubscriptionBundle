@@ -87,7 +87,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->scalarNode('trial_role')
-                    ->defaultValue('PLAN_TRIAL')
+                    ->defaultValue('ROLE_PLAN_TRIAL')
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('object_manager')
