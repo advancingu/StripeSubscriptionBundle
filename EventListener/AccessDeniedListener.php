@@ -33,7 +33,7 @@ class AccessDeniedListener implements AccessDeniedHandlerInterface
     /** @var $parameters array(string:string) */
     private $parameters;
     
-    /** @var $planRoles array(string) */
+    /** @var $planRoles array(string) Array of non-trial roles. */
     private $planRoles;
     
     public function __construct(
@@ -61,13 +61,11 @@ class AccessDeniedListener implements AccessDeniedHandlerInterface
         if ($accessDeniedException instanceof RequiredRolesMissingException)
         {
             $requiredRoles = $accessDeniedException->getRoles();
-            $planRoles = array();
             
             foreach ($requiredRoles as $role)
             {
-                $user = $this->securityContext->getToken()->getUser();
                 // check if required role is part of a plan and if this role is missing for the user
-                if (in_array($role, $this->planRoles) && !in_array($role, $user->getRoles()))
+                if (in_array($role, $this->planRoles) && !$this->securityContext->isGranted($role))
                 {
                     return $this->restrictedResponse();
                 }
