@@ -51,5 +51,17 @@ class AdvancinguStripeSubscriptionExtension extends Extension
             'advancingu_stripe_subscription.payee_name',
             $config['payee_name']
         );
+        $container->setParameter(
+            'advancingu_stripe_subscription.subscription_check.subscribe_route',
+            $config['subscription_check']['subscribe_route']
+        );
+        $container->setParameter(
+            'advancingu_stripe_subscription.subscription_check.subscription_required_i18nKey',
+            $config['subscription_check']['subscription_required_i18nKey']
+        );
+            $container->setParameter(
+            'advancingu_stripe_subscription.subscription_check.subscription_required_message_domain',
+            $config['subscription_check']['subscription_required_message_domain']
+        );
     }
 }

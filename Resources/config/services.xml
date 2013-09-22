@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="advancingu_stripe_subscription.subscription.class">Advancingu\StripeSubscriptionBundle\Component\SubscriptionComponent</parameter>
+        <parameter key="advancingu_stripe_subscription.access_denied_listener.class">Advancingu\StripeSubscriptionBundle\EventListener\AccessDeniedListener</parameter>
     </parameters>
 
     <services>
@@ -13,6 +14,19 @@
             <argument type="service" id="logger"></argument>
             <argument>%advancingu_stripe_subscription.keys.secret%</argument>
             <argument>%advancingu_stripe_subscription.plans%</argument>
+        </service>
+        <service id="advancingu_stripe_subscription.access_denied_listener" class="%advancingu_stripe_subscription.access_denied_listener.class%">
+            <argument type="service" id="security.context"></argument>
+            <argument type="service" id="router"></argument>
+            <argument type="service" id="session"></argument>
+            <argument type="service" id="translator"></argument>
+            <argument type="collection">
+                <argument key="plans">%advancingu_stripe_subscription.plans%</argument>
+                <argument key="subscribe_route">%advancingu_stripe_subscription.subscription_check.subscribe_route%</argument>
+                <argument key="subscription_required_i18nKey">%advancingu_stripe_subscription.subscription_check.subscription_required_i18nKey%</argument>
+                <argument key="subscription_required_message_domain">%advancingu_stripe_subscription.subscription_check.subscription_required_message_domain%</argument>
+            </argument>
+            <tag name="kernel.event_listener" event="security.kernel_response" method="handle" />
         </service>
     </services>
 </container>

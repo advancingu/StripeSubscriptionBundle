@@ -13,7 +13,9 @@ this bundle.
 Installation
 ------------
 
-The bundle requires Symfony 2.2 or greater and the Stripe PHP API. 
+The bundle requires Symfony 2.2 or greater and the Stripe PHP API. It also requires a 
+fork of JMSSecurityExtraBundle until [issue #122](https://github.com/schmittjoh/JMSSecurityExtraBundle/issues/122) is resolved.
+
 Install the bundle via Composer by adding the following line to your 
 ```composer.json``` dependencies: 
 
@@ -36,17 +38,30 @@ Sample configuration via ```config.yml```:
         stripe_secret_key: %advancingu_stripe_subscription.keys.secret%
         payee_name: "ACME Industries Inc."
         plans:
-            my_default_plan:     # The plan's ID as defined with Stripe.
+            my_default_plan:                 # The plan's ID as defined with Stripe.
                 i18nKey: plan.default.name   # Key inside translation domain for a plan.
                 messageDomain: messages      # Translation domain to use for plan name.
-                price: 2000      # In cents.
-                currency: CAD    # Three character ISO currency code. Must be supported by your Stripe account.
+                price: 2000                  # In cents.
+                currency: CAD                # Three character ISO currency code. Must be supported by your Stripe account.
+                role: ROLE_PLAN_DEFAULT      # The lowest user role required for permission to execute actions protected by the plan.
+        subscription_check:
+            subscribe_route: MyWebsiteBundle_default_subscribe            # Route to redirect to if a user tries to access a resource without or with an insufficient plan. 
+            subscription_required_i18nKey: subscription.please_subscribe  # Key of the flash message to display.
+            subscription_required_message_domain: messages                # Translation domain of flash message.
 
 To use the included HTML templates, add your Stripe public key to Twig's global variables:
 
     twig:
         globals:
             stripe_public_key: "%advancingu_stripe_subscription.keys.public%"
+
+To use the security exception listener, add the listener to your firewall in ``security.yml``:
+
+    security:
+        firewalls:
+            my_firewall:
+                access_denied_handler: advancingu_stripe_subscription.access_denied_listener
+
 
 License
 -------
