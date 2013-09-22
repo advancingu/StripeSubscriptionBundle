@@ -24,4 +24,10 @@ interface SubscriberInterface
      * a User's database ID.
      */
     public function getId();
+    
+    /**
+     * @return \DateTime|null Point in time at which the trial access 
+     * of a subscriber ends.
+     */
+    public function getTrialEnd();
 }
