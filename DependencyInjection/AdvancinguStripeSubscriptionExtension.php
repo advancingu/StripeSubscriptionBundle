@@ -59,9 +59,17 @@ class AdvancinguStripeSubscriptionExtension extends Extension
             'advancingu_stripe_subscription.subscription_check.subscription_required_i18nKey',
             $config['subscription_check']['subscription_required_i18nKey']
         );
-            $container->setParameter(
+        $container->setParameter(
             'advancingu_stripe_subscription.subscription_check.subscription_required_message_domain',
             $config['subscription_check']['subscription_required_message_domain']
+        );
+        $container->setParameter(
+            'advancingu_stripe_subscription.trial_role',
+            $config['trial_role']
+        );
+        $container->setParameter(
+            'advancingu_stripe_subscription.object_manager',
+            $config['object_manager']
         );
     }
 }

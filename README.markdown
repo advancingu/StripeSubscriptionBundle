@@ -43,11 +43,13 @@ Sample configuration via ```config.yml```:
                 messageDomain: messages      # Translation domain to use for plan name.
                 price: 2000                  # In cents.
                 currency: CAD                # Three character ISO currency code. Must be supported by your Stripe account.
-                role: ROLE_PLAN_DEFAULT      # The lowest user role required for permission to execute actions protected by the plan.
+                role: PLAN_DEFAULT           # The lowest user role required for permission to execute actions protected by the plan.
         subscription_check:
             subscribe_route: MyWebsiteBundle_default_subscribe            # Route to redirect to if a user tries to access a resource without or with an insufficient plan. 
             subscription_required_i18nKey: subscription.please_subscribe  # Key of the flash message to display.
             subscription_required_message_domain: messages                # Translation domain of flash message.
+        trial_role: PLAN_TRIAL               # Role name to identify a trial plan subscriber.
+        object_manager: doctrine_mongodb.odm.default_document_manager     # Service ID of the object manager responsible for persisting user instances.
 
 To use the included HTML templates, add your Stripe public key to Twig's global variables:
 

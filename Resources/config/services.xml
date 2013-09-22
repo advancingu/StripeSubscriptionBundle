@@ -28,5 +28,13 @@
             </argument>
             <tag name="kernel.event_listener" event="security.kernel_response" method="handle" />
         </service>
+        <service id="advancingu_stripe_subscription.authentication_success_listener" class="Advancingu\StripeSubscriptionBundle\EventListener\AuthenticationSuccessListener">
+            <argument type="service" id="service_container"></argument>
+            <argument type="collection">
+                <argument key="trial_role">%advancingu_stripe_subscription.trial_role%</argument>
+                <argument key="object_manager">%advancingu_stripe_subscription.object_manager%</argument>
+            </argument>
+            <tag name="kernel.event_listener" event="security.authentication.success" method="handleAuthenticationSuccess" />
+        </service>
     </services>
 </container>

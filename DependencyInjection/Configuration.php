@@ -86,6 +86,14 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->scalarNode('trial_role')
+                    ->defaultValue('PLAN_TRIAL')
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('object_manager')
+                    ->defaultValue('doctrine_mongodb.odm.default_document_manager')
+                    ->cannotBeEmpty()
+                ->end()
             ->end()
             ;
         
