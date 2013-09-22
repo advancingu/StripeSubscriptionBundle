@@ -123,4 +123,33 @@ class SubscriptionComponent
         
         return $result->__get('id');
     }
+    
+    /**
+     * Returns the name of the subscriber's current plan or null if none, 
+     * based on the current roles of $subscriber.
+     * 
+     * @param \Advancingu\StripeSubscriptionBundle\Model\SubscriberInterface $subscriber
+     * @return string|null 
+     */
+    public function getCurrentPlanName(\Advancingu\StripeSubscriptionBundle\Model\SubscriberInterface $subscriber)
+    {
+        $currentPlanName = null;
+        $roleNames = array();
+        
+        foreach ($this->plans as $planName => $plan)
+        {
+            $roleNames[$plan['role']] = $planName;
+        }
+        
+        foreach ($subscriber->getRoles() as $role)
+        {
+            if (in_array($role, array_keys($roleNames)))
+            {
+                $currentPlanName = $roleNames[$role];
+                break;
+            }
+        }
+        
+        return $currentPlanName;
+    }
 }
