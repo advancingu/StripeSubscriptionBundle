@@ -11,7 +11,9 @@
 
 namespace Advancingu\StripeSubscriptionBundle\Model;
 
-interface SubscriberInterface
+use Symfony\Component\Security\Core\User\UserInterface;
+
+interface SubscriberInterface extends UserInterface
 {
     /**
      * @return string Stripe customer object ID created with 
