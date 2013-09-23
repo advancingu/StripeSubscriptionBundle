@@ -13,8 +13,8 @@ this bundle.
 Installation
 ------------
 
-The bundle requires Symfony 2.2 or greater and the Stripe PHP API. It also requires a 
-fork of JMSSecurityExtraBundle until [issue #122](https://github.com/schmittjoh/JMSSecurityExtraBundle/issues/122) is resolved.
+The bundle requires Symfony 2.2 or greater, the Stripe PHP API, as well as 
+JMSSecurityExtraBundle.
 
 Install the bundle via Composer by adding the following line to your 
 ```composer.json``` dependencies: 

@@ -30,6 +30,8 @@ class AccessDeniedListener implements AccessDeniedHandlerInterface
     /** @var $translator \Symfony\Component\Translation\TranslatorInterface */
     private $translator;
     
+    private $decisionManager;
+    
     /** @var $parameters array(string:string) */
     private $parameters;
     
@@ -41,12 +43,14 @@ class AccessDeniedListener implements AccessDeniedHandlerInterface
             \Symfony\Component\Routing\RouterInterface $router, 
             \Symfony\Component\HttpFoundation\Session\SessionInterface $session, 
             \Symfony\Component\Translation\TranslatorInterface $translator,
+            \JMS\SecurityExtraBundle\Security\Authorization\RememberingAccessDecisionManager $decisionManager,
             array $parameters)
     {
         $this->securityContext = $securityContext;
         $this->router = $router;
         $this->session = $session;
         $this->translator = $translator;
+        $this->decisionManager = $decisionManager;
         $this->parameters = $parameters;
         
         $this->planRoles = array();
@@ -58,10 +62,11 @@ class AccessDeniedListener implements AccessDeniedHandlerInterface
         
     public function handle(Request $request, AccessDeniedException $accessDeniedException)
     {
-        if ($accessDeniedException instanceof RequiredRolesMissingException)
+        $lastDecision = $this->decisionManager->getLastDecisionCall();
+        $requiredRoles = $lastDecision[1];
+        
+        if (!empty($requiredRoles))
         {
-            $requiredRoles = $accessDeniedException->getRoles();
-            
             foreach ($requiredRoles as $role)
             {
                 // check if required role is part of a plan and if this role is missing for the user

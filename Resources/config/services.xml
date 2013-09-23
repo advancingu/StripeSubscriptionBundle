@@ -20,6 +20,7 @@
             <argument type="service" id="router"></argument>
             <argument type="service" id="session"></argument>
             <argument type="service" id="translator"></argument>
+            <argument type="service" id="security.access.decision_manager"></argument>
             <argument type="collection">
                 <argument key="plans">%advancingu_stripe_subscription.plans%</argument>
                 <argument key="subscribe_route">%advancingu_stripe_subscription.subscription_check.subscribe_route%</argument>
