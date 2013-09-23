@@ -68,6 +68,10 @@ class AdvancinguStripeSubscriptionExtension extends Extension
             $config['trial_role']
         );
         $container->setParameter(
+            'advancingu_stripe_subscription.trial_duration',
+            $config['trial_duration']
+        );
+        $container->setParameter(
             'advancingu_stripe_subscription.object_manager',
             $config['object_manager']
         );
