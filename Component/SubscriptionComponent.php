@@ -28,7 +28,8 @@ class SubscriptionComponent
     private $stripeApiKey;
     
     /** 
-     * @var array(string:array(string:mixed)) Plan names registered with Stripe.
+     * @var array(string:array(string:mixed)) Definitions of non-trial plans.
+     * Top array keys equal the plan names registered with Stripe.
      * @see https://manage.stripe.com/plans
      */
     private $plans;
@@ -125,8 +126,8 @@ class SubscriptionComponent
     }
     
     /**
-     * Returns the name of the subscriber's current plan or null if none, 
-     * based on the current roles of $subscriber.
+     * Returns the name of the subscriber's current non-trial 
+     * plan or null if none, based on the current roles of $subscriber.
      * 
      * @param \Advancingu\StripeSubscriptionBundle\Model\SubscriberInterface $subscriber
      * @return string|null 
