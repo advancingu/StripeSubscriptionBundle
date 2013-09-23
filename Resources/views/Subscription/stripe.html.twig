@@ -4,7 +4,6 @@
 //
 $('.plan-subscribe-button').click(function() {
 
-  $(this).attr("disabled", "disabled");
   $('#{{ planForm.selectedPlan.vars.id }}').val($(this).attr('data-plan-id'));
   var hasPaymentData = {{ subscriber.stripeCustomerId is empty ? 'false' : 'true'}};
 
@@ -13,6 +12,7 @@ $('.plan-subscribe-button').click(function() {
   if (!hasPaymentData) {
     
     var tokenHandler = function(res) {
+      $('.plan-subscribe-button').attr("disabled", "disabled");
       $('#{{ planForm.stripeToken.vars.id }}').val(res.id);
       $('#{{ planForm.stripeToken.vars.id }}').closest('form').submit();
     };
